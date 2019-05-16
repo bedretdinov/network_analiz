@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea32749-790a-48df-a022-73c2f555a05e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/static/img/screen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/demo.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/screen.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -233,12 +234,12 @@
       <option name="presentableId" value="Default" />
       <updated>1557914480391</updated>
       <workItem from="1557914482877" duration="5989000" />
-      <workItem from="1558001309250" duration="2069000" />
+      <workItem from="1558001309250" duration="2483000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8058000" />
+    <option name="totallyTimeSpent" value="8472000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2771" y="437" width="1389" height="789" extended-state="0" />
