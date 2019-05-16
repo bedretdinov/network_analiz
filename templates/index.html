@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+{% block body %}
+  <script type="text/javascript">
+    var nodes = null;
+    var edges = null;
+    var network = null;
+
+    function draw() {
+      // create people.
+      // value corresponds with the age of the person
+      nodes = [
+        {id: 1,  value: 2,  label: 'поиск' },
+        {id: 2,  value: 31, label: 'каталог'},
+        {id: 3,  value: 12, label: 'услуга'},
+        {id: 4,  value: 16, label: 'баннре' },
+        {id: 5,  value: 17, label: 'отзывы' },
+        {id: 6,  value: 15, label: 'описание'},
+        {id: 7,  value: 6,  label: 'листание баннера'},
+        {id: 8,  value: 5,  label: 'детальные отзывы'},
+        {id: 9,  value: 30, label: 'корзина'},
+        {id: 10, value: 18, label: 'заказ'},
+      ];
+
+      edges = [
+        {from: 1, to: 2, value: 3, title: ''},
+        {from: 2, to: 8, value: 3, title: ''},
+        {from: 2, to: 9, value: 5, title: 'каталог'},
+        {from: 2, to: 10,value: 1, title: 'услуга'},
+        {from: 4, to: 6, value: 8, title: 'баннре'},
+        {from: 5, to: 7, value: 2, title: 'отзывы'},
+        {from: 4, to: 5, value: 1, title: 'описание'},
+        {from: 9, to: 10,value: 2, title: 'листание баннера'},
+        {from: 2, to: 3, value: 6, title: 'детальные отзывы'},
+        {from: 3, to: 9, value: 4, title: 'корзина'},
+        {from: 5, to: 3, value: 1, title: 'заказ'},
+        {from: 2, to: 7, value: 4, title: 'вероятность 0.6'}
+      ];
+
+      // Instantiate our network object.
+      var container = document.getElementById('mynetwork');
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {
+        autoResize: true,
+          interaction: {
+                tooltipDelay: 3000
+            },
+        nodes: {
+            color:{
+                border:'#ffb82d',
+                highlight:{
+                    border:'#ff7f00',
+                    background:'#cb630a',
+                },
+                background:'#ff7f00'
+            },
+          fixed: true,
+          shape: 'dot',
+          scaling:{
+            label: {
+              min:8,
+              max:20
+            }
+          }
+        },
+        layout: {
+                randomSeed: 191006
+            },
+            width: '100%',
+            height: '100%'
+      };
+      network = new vis.Network(container, data, options);
+    }
+
+
+    function getNodeByID(id){
+        for (x in nodes) {
+            item = nodes[x];
+            if(item.id == id){
+                return item
+            }
+        }
+    }
+
+
+    $(function () {
+
+        $('#mynetwork').width($(window).width())
+        $('#mynetwork').height($(window).height())
+
+        draw()
+
+        $('#prob_box').hide()
+
+        network.on("click", function (params) {
+
+            probval = []
+            for (x in edges) {
+              item = edges[x];
+              if(item['to'] == params.nodes[0]){
+                  probval.push({'nodes':getNodeByID(item['from']), 'prob':item['value']})
+              }
+              if(item['from'] == params.nodes[0]){
+                  probval.push({'nodes':getNodeByID(item['to']), 'prob':item['value']})
+              }
+            }
+            $('#prob_box .content > a').remove()
+
+            if(probval.length==0){
+                $('#prob_box').hide()
+            }else{
+                $('#prob_box').show()
+            }
+
+            if(typeof probval != "undefined"){
+                for (x in probval) {
+                    item = probval[x];
+                    $('#prob_box .content').append('<a class=\'list-group-item\'>'+item.prob+'% '+item.nodes.label+'</a>')
+                }
+              }
+
+          });
+    })
+
+  </script>
+<header class="bg-primary text-center py-5 mb-4" onclick="location.href='/'">
+  <div class="container">
+      <h1 class="font-weight-light text-white">Network Analiz</h1>
+  </div>
+</header>
+
+<!-- Page Content -->
+<section class="py-5 text-center">
+      <div >
+        <div class="list-group" id="prob_box" style="width: 21%;">
+          <span href="#" class="list-group-item active">Вероятности переходов</span>
+          <div class="content">
+          </div>
+        </div>
+        <div id="mynetwork"></div>
+      </div>
+</section>
+{% endblock %}
